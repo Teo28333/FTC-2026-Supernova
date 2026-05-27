@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-public class Elevator implements SubsystemInterface {
+public class IntakeSS implements SubsystemInterface {
     @Override
     public void read() {
 
