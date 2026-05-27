@@ -16,13 +16,13 @@ abstract class BaseTeleOp extends OpMode {
     private JoinedTelemetry joinedTelemetry;
     private TelemetryManager telemetryManager;
 
-    protected abstract CompetitionTeleopRobot.Alliance getAlliance();
+    protected abstract Robot.Alliance getAlliance();
 
     protected abstract double getTagResetCooldownSeconds();
 
     @Override
     public void init() {
-        robot = new CompetitionTeleopRobot();
+        robot = new Robot();
         robot.setAlliance(getAlliance());
         robot.init(hardwareMap);
 
