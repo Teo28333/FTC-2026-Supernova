@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.OpMode.Teleop;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.subsystems.TeleOp.BaseTeleOp;
 
 @TeleOp(name = "Teleop Blue", group = "Teleop")
 public class TeleopBlue extends BaseTeleOp {
