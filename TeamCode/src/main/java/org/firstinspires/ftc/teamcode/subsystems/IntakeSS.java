@@ -39,6 +39,7 @@ public class IntakeSS implements SubsystemInterface {
     private boolean isTransferring = false;
     private boolean gateClosingForIntake = false;
     private boolean gateOpeningForTransfer = false;
+    private boolean showTelemetry = false;
     private String transferBlockReason = "idle";
     private BallState ballState = BallState.EMPTY;
     private TransferState transferState = TransferState.IDLE;
@@ -78,11 +79,25 @@ public class IntakeSS implements SubsystemInterface {
 
     @Override
     public void update() {
+        read();
+        write();
+        telemetry();
 
     }
 
     @Override
     public void telemetry() {
+        if (showTelemetry && telemetry != null) {
+            telemetry.addData("Intake motor 1 current", motor1Current);
+            telemetry.addData("Intake motor 2 current", motor2Current);
+            telemetry.addData("Intake motor 1 power", firstMotorPow);
+            telemetry.addData("Intake motor 2 power", secondMotorPow);
+            telemetry.addData("Gate position", gatePos);
+            telemetry.addData("LED color", ledColor);
+            telemetry.addData("Ball state", ballState);
+            telemetry.addData("Transfer state", transferState);
+            telemetry.addData("Transfer block reason", transferBlockReason);
+        }
 
     }
 
