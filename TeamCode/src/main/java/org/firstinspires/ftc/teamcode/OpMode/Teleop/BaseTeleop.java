@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.TeleOp;
+package org.firstinspires.ftc.teamcode.OpMode.Teleop;
 
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;

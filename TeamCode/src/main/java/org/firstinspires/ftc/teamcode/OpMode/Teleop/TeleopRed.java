@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode.OpMode.Teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.OpMode.Teleop.BaseTeleOp;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.subsystems.TeleOp.BaseTeleOp;
 
 @TeleOp(name = "Teleop Red", group = "Teleop")
+
 public class TeleopRed extends BaseTeleOp {
     @Override
     protected Robot.Alliance getAlliance() {
