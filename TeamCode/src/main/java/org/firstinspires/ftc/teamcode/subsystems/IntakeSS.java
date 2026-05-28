@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.Robot.HardwareWriteCache;
 
 public class IntakeSS implements SubsystemInterface {
     // ── Hardware ──────────────────────────────────────────────────────────────
@@ -26,6 +28,8 @@ public class IntakeSS implements SubsystemInterface {
     // ── Outputs ───────────────────────────────────────────────────────────────
     private double firstMotorPow  = 0.0;
     private double secondMotorPow = 0.0;
+    private double gatePos = 0.0;
+    private double ledColor = 0.0;
 
     // ── State ─────────────────────────────────────────────────────────────────
     private boolean motor1Stopped = false;
@@ -53,11 +57,22 @@ public class IntakeSS implements SubsystemInterface {
     }
     @Override
     public void read() {
+        motor2Current = intake2.getCurrent(CurrentUnit.MILLIAMPS);
+        if (motor2Stopped || isTransferring) {
+            motor1Current = intake1.getCurrent(CurrentUnit.MILLIAMPS);
+        } else {
+            motor1Current = 0.0;
+        }
 
     }
 
     @Override
     public void write() {
+        HardwareWriteCache.setMotorPower(intake1, firstMotorPow);
+        HardwareWriteCache.setMotorPower(intake2, secondMotorPow);
+        HardwareWriteCache.setServoPosition(gate, gatePos);
+
+        HardwareWriteCache.setServoPosition(led, ledColor);
 
     }
 

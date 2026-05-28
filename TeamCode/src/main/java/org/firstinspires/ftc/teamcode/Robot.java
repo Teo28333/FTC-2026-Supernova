@@ -5,13 +5,18 @@ import android.content.Context;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSS;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSS;
+
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 public class Robot {
     public enum Alliance {
@@ -61,6 +66,7 @@ public class Robot {
         lift.update();
         intake.write();
         lift.write();
+        HardwareWriteCache.flush();
 
         joinedTelemetry.addData("Alliance", alliance);
         joinedTelemetry.addData("Tag reset cooldown", tagResetCooldownSeconds);
@@ -71,6 +77,44 @@ public class Robot {
         if (follower != null) {
             follower.setTeleOpDrive(0.0, 0.0, 0.0, true);
             follower.update();
+        }
+        HardwareWriteCache.clear();
+    }
+
+    public static final class HardwareWriteCache {
+        private static final Map<DcMotorEx, Double> motorPowerWrites = new IdentityHashMap<>();
+        private static final Map<Servo, Double> servoPositionWrites = new IdentityHashMap<>();
+
+        private HardwareWriteCache() {
+        }
+
+        public static void setMotorPower(DcMotorEx motor, double power) {
+            if (motor != null) {
+                motorPowerWrites.put(motor, power);
+            }
+        }
+
+        public static void setServoPosition(Servo servo, double position) {
+            if (servo != null) {
+                servoPositionWrites.put(servo, position);
+            }
+        }
+
+        public static void flush() {
+            for (Map.Entry<DcMotorEx, Double> write : motorPowerWrites.entrySet()) {
+                write.getKey().setPower(write.getValue());
+            }
+
+            for (Map.Entry<Servo, Double> write : servoPositionWrites.entrySet()) {
+                write.getKey().setPosition(write.getValue());
+            }
+
+            clear();
+        }
+
+        public static void clear() {
+            motorPowerWrites.clear();
+            servoPositionWrites.clear();
         }
     }
 }
