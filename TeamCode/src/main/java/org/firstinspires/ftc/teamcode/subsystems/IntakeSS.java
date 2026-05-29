@@ -102,8 +102,8 @@ public class IntakeSS implements SubsystemInterface {
     }
 
     public void Start(){
-        firstMotorPow  = 1.0;
-        secondMotorPow = 1.0;
+        firstMotorPow  = 1.0;//a modifier pour pas exploser le robot(Le Intake)
+        secondMotorPow = -1.0;//a modifier pour pas exploser le robot(Le Intake)
         isIntaking = true;
         isTransferring = true;
         gateClosingForIntake = true;
